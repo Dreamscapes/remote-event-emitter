@@ -31,6 +31,10 @@ module.exports = {
     globals: {
       expect: true,
       sinon: true,
+    },
+
+    rules: {
+      'max-nested-callbacks': [1, 7],
     }
   }],
 }
