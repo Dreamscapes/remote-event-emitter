@@ -1,6 +1,7 @@
 # remote-event-emitter
 
 [![Build Status][travis-badge]][travis-url]
+[![Coverage Status][coveralls-badge]][coveralls-url]
 ![Built with GNU Make][make-badge]
 ![Required Node.js version][node-badge]
 
@@ -83,5 +84,7 @@ See the [LICENSE](LICENSE) file for information.
 [node-badge]: https://img.shields.io/badge/Node.js-10.0-brightgreen.svg?style=flat-square
 [travis-badge]: https://img.shields.io/travis/Dreamscapes/remote-event-emitter.svg?style=flat-square
 [travis-url]: https://travis-ci.com/Dreamscapes/remote-event-emitter
+[coveralls-badge]: https://img.shields.io/coveralls/Dreamscapes/remote-event-emitter.svg?style=flat-square
+[coveralls-url]: https://coveralls.io/github/Dreamscapes/remote-event-emitter
 [atom-ide-mocha]: https://github.com/Dreamscapes/atom-ide-mocha-core/tree/master/packages/atom-ide-mocha-core
 [mocha-reporter-remote]: https://github.com/Dreamscapes/atom-ide-mocha-core/tree/master/packages/mocha-reporter-remote
