@@ -82,6 +82,6 @@ See the [LICENSE](LICENSE) file for information.
 [make-badge]: https://img.shields.io/badge/Built%20with-GNU%20Make-brightgreen.svg?style=flat-square
 [node-badge]: https://img.shields.io/badge/Node.js-10.0-brightgreen.svg?style=flat-square
 [travis-badge]: https://img.shields.io/travis/Dreamscapes/remote-event-emitter.svg?style=flat-square
-[travis-url]: https://travis-ci.org/Dreamscapes/remote-event-emitter
+[travis-url]: https://travis-ci.com/Dreamscapes/remote-event-emitter
 [atom-ide-mocha]: https://github.com/Dreamscapes/atom-ide-mocha-core/tree/master/packages/atom-ide-mocha-core
 [mocha-reporter-remote]: https://github.com/Dreamscapes/atom-ide-mocha-core/tree/master/packages/mocha-reporter-remote
