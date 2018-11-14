@@ -17,7 +17,7 @@ class Consumer extends EventEmitter {
 
       socket
         .once('error', err => source.emit('error', err))
-        .once('close', (...args) => source.emit('close', ...args))
+        .once('close', (...args) => setImmediate(() => source.emit('close', ...args)))
         .pipe(new Deserialiser())
         .pipe(new JSONParser())
         .on('data', ({ event, args }) => source.emit(event, ...args))

@@ -1,4 +1,3 @@
-import os from 'os'
 import { Transform } from 'stream'
 
 /**
@@ -16,16 +15,15 @@ class Serialiser extends Transform {
   }
 
   _transform(object, encoding, done) {
+    let stringified
+
     try {
-      // Delay the delivery until next loop because it might happen that some other, unrelated
-      // error occurs down the stack (somewhere inside done(), basically) which would trigger the
-      // catch block below and cause the done() callback to be called again, effectively masking
-      // the real problem. ⚠️
-      // We are using try/catch just to make sure we catch any serialisation issues.
-      return void setImmediate(done, null, `${JSON.stringify(object)}${os.EOL}`)
+      stringified = JSON.stringify(object)
     } catch (err) {
       return void done(err)
     }
+
+    return void done(null, `${stringified}\n`)
   }
 }
 
