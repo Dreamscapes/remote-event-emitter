@@ -57,7 +57,10 @@ class Provider extends EventEmitter {
    * @return    {this}
    */
   end() {
-    this.#out.end()
+    // Schedule delivery of the end event to next event loop because otherwise this could result
+    // in some weird issues with the `close` event being emitted before the last previous event.
+    // This is due to the fact that we are using `setImmediate()` in the serialiser.
+    setImmediate(() => this.#out.end())
     return this
   }
 }
