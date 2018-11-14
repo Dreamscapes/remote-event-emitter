@@ -5,11 +5,14 @@ coverage
 docs
 node_modules
 utils
-.eslintrc.js
+
 .eslintignore
+.eslintcache
+
+.editorconfig
+.eslintrc.js
 .nycrc.json
 .remarkrc.json
-.editorconfig
 .commitlintrc.js
 .remarkrc.js
 .travis.yml
