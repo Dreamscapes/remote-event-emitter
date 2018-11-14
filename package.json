@@ -48,6 +48,9 @@
   ],
   "license": "BSD-3-Clause",
   "main": "src",
+  "publishConfig": {
+    "access": "public"
+  },
   "repository": {
     "type": "git",
     "url": "git://github.com/Dreamscapes/remote-event-emitter.git"

@@ -1,0 +1,17 @@
+.git
+coverage
+.nyc_output
+.github
+docs
+node_modules
+utils
+.eslintrc.js
+.eslintignore
+.nycrc.json
+.remarkrc.json
+.editorconfig
+.commitlintrc.js
+.remarkrc.js
+.travis.yml
+makefile
+local.mk

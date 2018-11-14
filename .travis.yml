@@ -26,6 +26,7 @@ after_success:
   - cat coverage/lcov.info | node_modules/.bin/coveralls
 
 deploy:
+  skip_cleanup: true
   provider: npm
   email: rr.rossmann@gmail.com
   api_key:
