@@ -1,6 +1,7 @@
 import { Server } from 'net'
 import { EventEmitter } from 'events'
 import { PassThrough } from 'stream'
+import { SEPARATOR } from '../constants'
 import { Consumer } from '.'
 
 describe('Consumer', () => {
@@ -141,7 +142,7 @@ describe('Consumer', () => {
 
     it('forwards serialised payloads as events with arguments', async () => {
       const payload = { event: 'test', args: [{ first: true }, { second: 'yup' }] }
-      const raw = `${JSON.stringify(payload)}\n`
+      const raw = `${JSON.stringify(payload)}${SEPARATOR}`
 
       const socket = new PassThrough()
       setImmediate(() => server.emit('connection', socket))
@@ -161,7 +162,7 @@ describe('Consumer', () => {
         JSON.stringify({ event: 'test', args: [{ first: 'event' }] }),
         JSON.stringify({ event: 'test', args: [{ second: true }] }),
         JSON.stringify({ event: 'test', args: [{ third: 'of course' }] }),
-      ].join('\n')
+      ].join(SEPARATOR)
 
       const socket = new PassThrough()
       setImmediate(() => server.emit('connection', socket))
@@ -193,7 +194,7 @@ describe('Consumer', () => {
         JSON.stringify({ event: 'test', args: [{ first: 'event' }] }),
         JSON.stringify({ event: 'test', args: [{ second: true }] }),
         JSON.stringify({ event: 'test', args: [{ third: 'of course' }] }),
-      ].join('\n')
+      ].join(SEPARATOR)
 
       const chunks = [raw.slice(0, 12), raw.slice(12)]
       const socket = new PassThrough()
@@ -244,7 +245,7 @@ describe('Consumer', () => {
       await new Promise(resolve => setImmediate(resolve))
 
       expect(events).to.equal(0)
-      socket.end('\n')
+      socket.end(SEPARATOR)
       await new Promise(resolve => setImmediate(resolve))
       await new Promise(resolve => setImmediate(resolve))
       expect(events).to.equal(1)

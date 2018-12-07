@@ -1,7 +1,7 @@
 import { Server } from 'net'
 import { EventEmitter } from 'events'
-import { EOL } from 'os'
 import split from 'binary-split'
+import { SEPARATOR } from '../constants'
 import { JSONParser } from './deserialisers'
 
 
@@ -38,7 +38,7 @@ class Consumer extends EventEmitter {
       socket
         .once('error', err => source.emit('error', err))
         .once('close', (...args) => setImmediate(() => source.emit('close', ...args)))
-        .pipe(split(EOL))
+        .pipe(split(SEPARATOR))
         .pipe(new JSONParser())
         .on('data', ({ event, args }) => source.emit(event, ...args))
 

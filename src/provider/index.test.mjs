@@ -1,6 +1,8 @@
 import net from 'net'
 import { EventEmitter } from 'events'
+import { SEPARATOR } from '../constants'
 import { Provider } from '.'
+
 
 const destination = '/tmp/remote-event-emitter.test.sock'
 
@@ -63,7 +65,7 @@ describe('Provider', () => {
       const raw = received.toString('utf8')
       const payload = JSON.parse(raw)
 
-      expect(raw.endsWith('\n')).to.equal(true)
+      expect(raw.endsWith(SEPARATOR)).to.equal(true)
       expect(payload).to.have.all.keys([
         'event',
         'args',

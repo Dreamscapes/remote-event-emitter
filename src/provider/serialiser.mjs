@@ -1,4 +1,5 @@
 import { Transform } from 'stream'
+import { SEPARATOR } from '../constants'
 
 /**
  * Given a standard JS value, attempt to serialise it into JSON and send it out, with a newline at
@@ -23,7 +24,7 @@ class Serialiser extends Transform {
       return void done(err)
     }
 
-    return void done(null, `${stringified}\n`)
+    return void done(null, `${stringified}${SEPARATOR}`)
   }
 }
 
