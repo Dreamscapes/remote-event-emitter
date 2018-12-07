@@ -1,7 +1,7 @@
 {
   "name": "remote-event-emitter",
   "description": "Deliver events remotely over Unix sockets or TCP connections using standard EventEmitter",
-  "version": "1.0.2",
+  "version": "1.1.0",
   "author": "Robert Rossmann <rr.rossmann@me.com>",
   "bugs": "https://github.com/Dreamscapes/remote-event-emitter/issues",
   "contributors": [],
