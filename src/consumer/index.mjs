@@ -4,6 +4,14 @@ import { EOL } from 'os'
 import split from 'binary-split'
 import { JSONParser } from './deserialisers'
 
+
+/**
+ * @typedef  {import("net").ListenOptions|Number|String}  Address   A port, a socket, or object
+ *                                                                  containing information where to
+ *                                                                  listen for connections
+ * @see     https://nodejs.org/dist/latest-v10.x/docs/api/net.html#net_server_listen
+ */
+
 class Consumer extends EventEmitter {
   #server = new Server()
 
@@ -13,8 +21,18 @@ class Consumer extends EventEmitter {
     this.#server.on('error', err => this.emit('error', err))
   }
 
+  /**
+   * Start listening for incoming connections on a given socket/port
+   *
+   * @param     {Object}            options             Input options
+   * @param     {Address}           options.address     Socket to listen on
+   * @return    {Promise<void>}
+   */
   async listen({ address }) {
-    this.#server.on('connection', socket => {
+    /** @type {Server} */
+    const server = this.#server
+
+    server.on('connection', socket => {
       const source = new EventEmitter()
 
       socket
@@ -27,10 +45,10 @@ class Consumer extends EventEmitter {
       this.emit('connection', source)
     })
 
-    this.#server.listen(address)
+    server.listen(address)
 
     await new Promise(resolve =>
-      this.#server.once('listening', resolve))
+      server.once('listening', resolve))
   }
 
   async close() {
