@@ -147,7 +147,7 @@ describe('Consumer', () => {
       setImmediate(() => server.emit('connection', socket))
       const source = await new Promise(resolve => consumer.once('connection', resolve))
       // Send the raw data to the socket
-      setImmediate(() => socket.write(raw))
+      setImmediate(() => socket.end(raw))
       // Get the JS object back on the source
       const received = await new Promise(resolve => source.once('test', (...args) => resolve(args)))
 
@@ -165,7 +165,7 @@ describe('Consumer', () => {
       const source = await new Promise(resolve => consumer.once('connection', resolve))
 
       // Send the raw data to the socket
-      setImmediate(() => socket.write(raw))
+      setImmediate(() => socket.end(raw))
 
       // Get the two separate events
       const messages = await new Promise(resolve => {
@@ -203,7 +203,7 @@ describe('Consumer', () => {
       await new Promise(resolve => setImmediate(resolve))
 
       expect(events).to.equal(0)
-      socket.write('\n')
+      socket.end('\n')
       await new Promise(resolve => setImmediate(resolve))
       await new Promise(resolve => setImmediate(resolve))
       expect(events).to.equal(1)
