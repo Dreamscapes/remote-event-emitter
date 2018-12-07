@@ -157,8 +157,11 @@ describe('Consumer', () => {
     })
 
     it('handles payloads with multiple serialised JSON strings', async () => {
-      const payload = { event: 'test', args: [{ test: 'yes' }] }
-      const raw = `${JSON.stringify(payload)}\n${JSON.stringify(payload)}\n`
+      const raw = [
+        JSON.stringify({ event: 'test', args: [{ first: 'event' }] }),
+        JSON.stringify({ event: 'test', args: [{ second: true }] }),
+        JSON.stringify({ event: 'test', args: [{ third: 'of course' }] }),
+      ].join('\n')
 
       const socket = new PassThrough()
       setImmediate(() => server.emit('connection', socket))
@@ -179,9 +182,47 @@ describe('Consumer', () => {
         })
       })
 
-      expect(messages).to.have.length(2)
-      expect(messages[0]).to.have.property('test', 'yes')
-      expect(messages[1]).to.have.property('test', 'yes')
+      expect(messages).to.have.length(3)
+      expect(messages[0]).to.have.property('first', 'event')
+      expect(messages[1]).to.have.property('second', true)
+      expect(messages[2]).to.have.property('third', 'of course')
+    })
+
+    it('handles incomplete JSON payloads delivered over multiple chunks', async () => {
+      const raw = [
+        JSON.stringify({ event: 'test', args: [{ first: 'event' }] }),
+        JSON.stringify({ event: 'test', args: [{ second: true }] }),
+        JSON.stringify({ event: 'test', args: [{ third: 'of course' }] }),
+      ].join('\n')
+
+      const chunks = [raw.slice(0, 12), raw.slice(12)]
+      const socket = new PassThrough()
+      setImmediate(() => server.emit('connection', socket))
+      const source = await new Promise(resolve => consumer.once('connection', resolve))
+
+      // Send the raw data to the socket
+      setImmediate(() => {
+        socket.write(chunks[0])
+        setImmediate(() =>
+          socket.end(chunks[1]))
+      })
+
+      // Get the two separate events
+      const messages = await new Promise(resolve => {
+        const events = []
+        source.on('test', data => {
+          events.push(data)
+
+          if (events.length === 2) {
+            return void resolve(events)
+          }
+        })
+      })
+
+      expect(messages).to.have.length(3)
+      expect(messages[0]).to.have.property('first', 'event')
+      expect(messages[1]).to.have.property('second', true)
+      expect(messages[2]).to.have.property('third', 'of course')
     })
 
     it('waits for more data if the payload is not terminated by a newline', async () => {

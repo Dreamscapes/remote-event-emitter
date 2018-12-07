@@ -5,7 +5,9 @@
   "author": "Robert Rossmann <rr.rossmann@me.com>",
   "bugs": "https://github.com/Dreamscapes/remote-event-emitter/issues",
   "contributors": [],
-  "dependencies": {},
+  "dependencies": {
+    "binary-split": "^1.0.5"
+  },
   "devDependencies": {
     "@babel/cli": "^7.0.0",
     "@babel/core": "^7.0.0",
