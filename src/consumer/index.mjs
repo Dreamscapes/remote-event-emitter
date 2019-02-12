@@ -1,6 +1,6 @@
 import { Server } from 'net'
 import { EventEmitter } from 'events'
-import split from 'binary-split'
+import * as split from 'binary-split'
 import { SEPARATOR } from '../constants'
 import { JSONParser } from './deserialisers'
 

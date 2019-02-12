@@ -1,5 +1,5 @@
 import { EventEmitter } from 'events'
-import net from 'net'
+import * as net from 'net'
 import { Serialiser } from './serialiser'
 
 /**

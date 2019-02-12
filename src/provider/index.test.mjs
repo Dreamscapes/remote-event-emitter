@@ -1,4 +1,4 @@
-import net from 'net'
+import * as net from 'net'
 import { EventEmitter } from 'events'
 import { SEPARATOR } from '../constants'
 import { Provider } from '.'
