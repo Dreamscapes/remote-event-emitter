@@ -1,4 +1,5 @@
 import * as net from 'net'
+import * as fs from 'fs'
 import { EventEmitter } from 'events'
 import { SEPARATOR } from '../constants'
 import { Provider } from '.'
@@ -10,6 +11,15 @@ describe('Provider', () => {
   let server
 
   before(() => {
+    // In case the socket was not cleaned up due to the test suite prematurely crashing or some
+    // such, remove the socket forcibly.
+    try {
+      // eslint-disable-next-line no-sync
+      fs.unlinkSync(destination)
+    } catch {
+      // noop
+    }
+
     server = net.createServer(req => {
       req.unref()
     }).listen(destination)
@@ -46,6 +56,18 @@ describe('Provider', () => {
 
     expect(net.connect).to.have.callCount(1)
     expect(net.connect).to.have.been.calledWith(destination)
+  })
+
+  it('re-emits socket errors on itself', async () => {
+    const socket = new EventEmitter()
+    const error = new Error('socket fail')
+    sinon.stub(net, 'connect').returns(socket)
+    setImmediate(() => void socket.emit('error', error))
+
+    const provider = new Provider({ destination })
+    const err = await new Promise(resolve => provider.once('error', resolve))
+
+    expect(err).to.equal(error)
   })
 
 

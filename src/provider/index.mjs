@@ -22,6 +22,12 @@ class Provider extends EventEmitter {
   #out = new Serialiser()
 
   /**
+   * Socket which is connected to the remote end
+   * @type    {net.Socket}
+   */
+  #socket = null
+
+  /**
    * Construct a new instance
    *
    * @param     {Object}    options                 Constructor options
@@ -33,8 +39,12 @@ class Provider extends EventEmitter {
   constructor({ destination = null } = {}) {
     super()
 
+    this.#socket = net.connect(destination)
     // Initialise connection to the socket and pipe the serialiser output to the socket
-    this.#out.pipe(net.connect(destination))
+    this.#out.pipe(this.#socket)
+
+    // Forward socket errors to ourselves
+    this.#socket.on('error', err => this.emit('error', err))
   }
 
   /**
