@@ -28,13 +28,8 @@ module.exports = {
       mocha: true,
     },
 
-    globals: {
-      expect: true,
-      sinon: true,
-    },
-
     rules: {
       'max-nested-callbacks': [1, 7],
-    }
+    },
   }],
 }

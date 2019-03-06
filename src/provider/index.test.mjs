@@ -1,6 +1,8 @@
 import * as net from 'net'
 import * as fs from 'fs'
 import { EventEmitter } from 'events'
+import { expect } from 'chai'
+import * as sinon from 'sinon'
 import { SEPARATOR } from '../constants'
 import { Provider } from '.'
 

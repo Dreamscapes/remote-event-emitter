@@ -1,3 +1,4 @@
+import { expect } from 'chai'
 import * as RemoteEventEmitter from '.'
 
 describe('Module: remote-event-emitter', () => {

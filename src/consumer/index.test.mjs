@@ -1,6 +1,8 @@
 import { Server } from 'net'
 import { EventEmitter } from 'events'
 import { PassThrough } from 'stream'
+import { expect } from 'chai'
+import * as sinon from 'sinon'
 import { SEPARATOR } from '../constants'
 import { Consumer } from '.'
 
