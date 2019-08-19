@@ -18,18 +18,4 @@ module.exports = {
       ignores: ['modules'],
     }],
   },
-
-  overrides: [{
-    files: [
-      '**/*.test.mjs',
-    ],
-
-    env: {
-      mocha: true,
-    },
-
-    rules: {
-      'max-nested-callbacks': [1, 7],
-    },
-  }],
 }
